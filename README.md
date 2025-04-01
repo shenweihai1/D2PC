@@ -38,7 +38,7 @@ D2PC depends on protobufs, libevent and openssl, so you will need the following 
 We run our code on Ubuntu20.04.
 
 ```
-sudo apt install -y libprotobuf-dev libevent-dev libssl-dev protobuf-compiler libevent-dev openssl libssl-dev
+sudo apt install -y libprotobuf-dev libevent-dev libssl-dev protobuf-compiler libevent-dev openssl libssl-dev nlohmann-json3-dev
 
 git clone https://github.com/shenweihai1/D2PC.git
 
@@ -72,6 +72,7 @@ make -j$(nproc) install
 
 # 4. Compile D2PC
 cd D2PC
+make -j$(nproc) 
 ```
 
 ## Compile
