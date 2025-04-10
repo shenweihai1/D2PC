@@ -48,7 +48,11 @@ public:
     virtual std::vector<int> Stats() = 0;
 
     // Sharding logic: Given key, generates a number b/w 0 to nshards-1
+    // We only support client.h
     uint64_t key_to_shard(const std::string &key, uint64_t nshards) {
+        int keyn = std::atoi(key.c_str());
+        return keyn % nshards;
+        /*
         Debug("key %s", key.c_str());
         uint64_t i;
         if(nshards == 0){
@@ -150,7 +154,7 @@ public:
             i = hash % nshards;
         }
 
-        return i;
+        return i;*/
     };
 };
 

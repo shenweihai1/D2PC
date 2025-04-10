@@ -339,7 +339,7 @@ main(int argc, char **argv)
 
     // Load coordinator replicas configuration
     std::string str(configPath);
-    std::string config_prefix = str.substr(0, str.length()-8);
+    std::string config_prefix = "~/D2PC/store/tools/shard";
     coordinatorConfigPath = config_prefix + ".coor.config";
     fprintf(stderr, "coordinator config path: %s\n", coordinatorConfigPath.c_str());
     std::ifstream coordinatorConfigStream(coordinatorConfigPath);

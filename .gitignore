@@ -1,4 +1,6 @@
 .obj/
+*.log
+store/tools/shard*.config
 
 lockserver/client-main
 lockserver/server-main

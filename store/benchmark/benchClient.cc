@@ -247,19 +247,21 @@ main(int argc, char **argv)
         exit(0);
     }
 
+    std::cout<<"Key space used:"<<nKeys<<",nShards:"<<nShards<<",nReplicas:"<<nReplicas<<std::endl;
+
     // Read in the keys from a file.
     string key, value;
-    ifstream in;
-    in.open(keysPath);
-    if (!in) {
-        fprintf(stderr, "Could not read keys from: %s\n", keysPath);
-        exit(0);
-    }
-    for (int i = 0; i < nKeys; i++) {
-        getline(in, key);
-        keys.push_back(key);
-    }
-    in.close();
+    // ifstream in;
+    // in.open(keysPath);
+    // if (!in) {
+    //     fprintf(stderr, "Could not read keys from: %s\n", keysPath);
+    //     exit(0);
+    // }
+    // for (int i = 0; i < nKeys; i++) {
+    //     getline(in, key);
+    //     keys.push_back(key);
+    // }
+    // in.close();
 
 
     struct timeval t0, t1, t2, t3, t4;
@@ -279,6 +281,9 @@ main(int argc, char **argv)
     gettimeofday(&t0, NULL);
     srand(t0.tv_sec + t0.tv_usec);
 
+    wPer = 50;
+    tLen = 4;
+
     while (1) {
         gettimeofday(&t4, NULL);
         client->Begin();
@@ -290,12 +295,21 @@ main(int argc, char **argv)
         Debug("transaction len: %lu", tLen);
         Debug("write per: %lu", wPer);
         std::vector<string> rset, wset;
+        int par_id = rand_key()%nShards;
+        bool read_only = rand() % 100 < wPer;
         for (int j = 0; j < tLen; j++) {
-            key = keys[rand_key()];
+            int b = rand_key();
+            b = b+(nShards - b%nShards)+par_id;
+            if (b>=nKeys){
+                b = nKeys-1;
+            }
 
-            if (rand() % 100 < wPer) {
+            key = std::to_string(b);
+
+            if (!read_only) {
                 gettimeofday(&t3, NULL);
-                client->Put(key, key);
+                client->Get(key, value);
+                client->Put(key, "aaaaaa");
                 gettimeofday(&t4, NULL);
                 wset.push_back(key);
                 

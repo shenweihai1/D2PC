@@ -32,7 +32,29 @@ D2PC depends on protobufs, libevent and openssl, so you will need the following 
 - libssl-dev
 - protobuf-compiler
 
-# Deployment
+## Run
+```
+1. cd D2PC/store/tools/
+2. modify config files.
+    for example, if there are 3 shards, there should be shard0.config, shard1.config, shard2.config, in each file, configure the replicas of this shard.
+    An additional configuration for co-coordinators is needed, named shard.coor.config.
+3. run key_generator.py to generate keys
+4. modify run-test.sh
+    set tpcmode as 'parallel'
+    set mode as 'occ'
+    set store as 'strongstore'
+    set client as 'retwisClient'
+    set keypath as the location of generated keys.
+
+    you can configure others as you need, including:
+    shard number: nshards
+    replica number per shard: nreplica
+    clients number: nclient
+    run time: rtime
+5. ./run_test.sh
+```
+
+# Deployment - 2025 version
 
 ## Environment
 We run our code on Ubuntu20.04.
@@ -75,31 +97,26 @@ cd D2PC
 make -j$(nproc) 
 ```
 
-## Compile
+## Run the code
 ```
-cd D2PC
-make
-```
+cd ~/D2PC
+mkdir -p ~/logs/D2PC
+mkdir -p ~/D2PC/logs
 
-## Run
-```
-1. cd D2PC/store/tools/
-2. modify config files.
-    for example, if there are 3 shards, there should be shard0.config, shard1.config, shard2.config, in each file, configure the replicas of this shard.
-    An additional configuration for co-coordinators is needed, named shard.coor.config.
-3. run key_generator.py to generate keys
-4. modify run-test.sh
-    set tpcmode as 'parallel'
-    set mode as 'occ'
-    set store as 'strongstore'
-    set client as 'retwisClient'
-    set keypath as the location of generated keys.
+# Update ./store/tools/ips-*.pub accordingly
+cd ~/tapir/store/tools
+python3 generator.py 10 24
 
-    you can configure others as you need, including:
-    shard number: nshards
-    replica number per shard: nreplica
-    clients number: nclient
-    run time: rtime
-5. ./run-test.sh
-```
+# Update ./store/tools/shard.coor.config accordingly
+# Each line represents a host on each DC
 
+cd ~/D2PC
+python3 generater.py
+
+# Run a test
+cd ~/D2PC/store/tools
+bash run_test.sh
+
+# Run full code
+bash cmds-1.sh
+```
