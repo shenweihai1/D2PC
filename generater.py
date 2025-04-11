@@ -1,3 +1,5 @@
+import sys
+
 nShardsPerShards=24
 leaders = []
 for e in open("./store/tools/ips_l.pub","r").readlines():
@@ -73,5 +75,7 @@ def generate(shard):
     
 
 if __name__ == "__main__":
+    nShardsPerShards=int(sys.argv[1])
+    print("We are using nShardsPerShards:{s}".format(s=nShardsPerShards))
     for shard in range(1,11):
         generate(shard)

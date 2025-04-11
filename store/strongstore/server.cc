@@ -2,11 +2,31 @@
 
 #include "store/strongstore/server.h"
 #include "store/benchmark/config.h"
+#include <filesystem>
+#include <cstdlib>
 
 namespace strongstore {
 
 using namespace std;
 using namespace proto;
+
+std::string getHomePath() {
+    // On Unix-like systems (Linux, macOS), check HOME environment variable
+    const char* home = std::getenv("HOME");
+    
+    // On Windows, check USERPROFILE environment variable
+    if (!home) {
+        home = std::getenv("USERPROFILE");
+    }
+    
+    // Fallback if neither is found
+    if (!home) {
+        std::cerr << "Unable to determine home directory." << std::endl;
+        return "";
+    }
+    
+    return std::string(home);
+}
 
 Server::Server(Mode mode, TpcMode tpcMode, uint64_t skew, uint64_t error) : mode(mode), tpcMode(tpcMode)
 {
@@ -339,7 +359,8 @@ main(int argc, char **argv)
 
     // Load coordinator replicas configuration
     std::string str(configPath);
-    std::string config_prefix = "~/D2PC/store/tools/shard";
+    std::string config_prefix = strongstore::getHomePath() + "/D2PC/store/tools/shard";
+    std::cout<<"config_prefix:"<<config_prefix<<std::endl;
     coordinatorConfigPath = config_prefix + ".coor.config";
     fprintf(stderr, "coordinator config path: %s\n", coordinatorConfigPath.c_str());
     std::ifstream coordinatorConfigStream(coordinatorConfigPath);

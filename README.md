@@ -111,7 +111,7 @@ python3 generator.py 10 24
 # Each line represents a host on each DC
 
 cd ~/D2PC
-python3 generater.py
+python3 generater.py 24
 
 # Run a test
 cd ~/D2PC/store/tools
@@ -119,4 +119,9 @@ bash run_test.sh
 
 # Run full code
 bash cmds-1.sh
+
+# Parameters:
+# 1. timeout: 30 in ./generater.py and ./clients.sh
+# 2. # of clients: clients in clients.sh
+# 3. config_prefix in ./store/strongstore/server.cc
 ```
