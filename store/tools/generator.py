@@ -24,6 +24,7 @@ def getNoLeaderBasedShardsInfo():
         file_contents = file.read()
         n_partitions = int(file_contents)
 
+    print("hosts:", leaders, f1, f2)
     data = collections.defaultdict(list)
     data["n_partitions"] = n_partitions
     for i in range(n_partitions):

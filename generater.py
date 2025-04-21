@@ -77,5 +77,9 @@ def generate(shard):
 if __name__ == "__main__":
     nShardsPerShards=int(sys.argv[1])
     print("We are using nShardsPerShards:{s}".format(s=nShardsPerShards))
-    for shard in range(1,11):
+    n_partitions=-1
+    with open('./store/tools/n_partitions', 'r') as file:
+        file_contents = file.read()
+        n_partitions = int(file_contents)
+    for shard in range(1,n_partitions+1):
         generate(shard)

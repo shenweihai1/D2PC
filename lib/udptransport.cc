@@ -145,7 +145,8 @@ BindToPort(int fd, const string &host, const string &port)
     Debug("Binding to %s:%d", inet_ntoa(sin.sin_addr), htons(sin.sin_port));
 
     if (bind(fd, (sockaddr *)&sin, sizeof(sin)) < 0) {
-        PPanic("Failed to bind to socket");
+            PPanic("Failed to bind to socket host/port %s:%s",
+                  host.c_str(), port.c_str());
     }
 }
 

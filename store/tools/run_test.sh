@@ -23,14 +23,12 @@ mkdir -p $logdir
 rm $logdir/*.log
 
 # Machines on which replicas are running.
-#replicas=("47.99.136.66" "47.89.249.0" "8.209.111.83")
-localhost="127.0.0.1"
+localhost="172.16.0.18"
 replicas=("$localhost" "$localhost" "$localhost")
 
 # Machines on which clients are running.
-#clients=("121.199.75.14" "47.251.49.252" "8.211.5.151")
 clients=("$localhost" "$localhost" "$localhost")
-#clients=("121.199.75.14")
+#clients=("52.254.11.238")
 
 #client="retwisClient"
 client="benchClient"    # Which client (benchClient, retwisClient, etc)
@@ -41,7 +39,7 @@ workloaddata=0
 keypath="$HOME/D2PC/store/tools/keys"
 #keypath="/root/D2PC/store/tools/tpcc_data"
 
-nshard=4     # number of shards
+nshard=1     # number of shards
 nreplica=3   # number of replicas
 nclient=9  # number of clients to run (per machine)
 nkeys=1000000 # number of keys to use

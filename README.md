@@ -60,7 +60,7 @@ D2PC depends on protobufs, libevent and openssl, so you will need the following 
 We run our code on Ubuntu20.04.
 
 ```
-sudo apt install -y libprotobuf-dev libevent-dev libssl-dev protobuf-compiler libevent-dev openssl libssl-dev nlohmann-json3-dev
+sudo apt install -y libprotobuf-dev libevent-dev libssl-dev protobuf-compiler libevent-dev openssl libssl-dev nlohmann-json3-dev g++ gcc make cmake net-tools pkg-config python silversearcher-ag
 
 git clone https://github.com/shenweihai1/D2PC.git
 
@@ -71,7 +71,7 @@ tar -zxvf protobuf-all-3.13.0.tar.gz
 cd protobuf-3.13.0/
 ./configure --prefix=/usr/local/protobuf
 make -j$(nproc) 
-make -j$(nproc) install
+sudo make -j$(nproc) install
 
 # 2. install libevent
 cd ~
@@ -80,7 +80,7 @@ tar -xzvf libevent-2.1.8-stable.tar.gz
 cd libevent-2.1.8-stable
 ./configure --prefix=/usr/local/libevent
 make -j$(nproc) 
-make -j$(nproc) install
+sudo make -j$(nproc) install
 
 # 3. install googletest
 cd ~
@@ -89,12 +89,15 @@ tar -xzvf googletest-release-1.8.1.tar.gz
 cd googletest-release-1.8.1
 cmake ./
 make -j$(nproc) 
-make -j$(nproc) install
+sudo make -j$(nproc) install
 
 
 # 4. Compile D2PC
 cd D2PC
+make clean
 make -j$(nproc) 
+
+# To deployment on all servers, please check Warbler (OSDI'25).
 ```
 
 ## Run the code
@@ -103,17 +106,24 @@ cd ~/D2PC
 mkdir -p ~/logs/D2PC
 mkdir -p ~/D2PC/logs
 
-# Update ./store/tools/ips-*.pub accordingly
-cd ~/tapir/store/tools
-python3 generator.py 10 24
+# Update ./store/tools/ips-*.pub and ./store/tools/n_partitions accordingly
+cd ~/D2PC/store/tools
+python3 generator.py {n_partitions} 24
 
 # Update ./store/tools/shard.coor.config accordingly
 # Each line represents a host on each DC
+# Example
+```
+f 1
+replica 128.24.19.96:61102
+replica 172.172.97.107:61103
+replica 172.203.21.33:61104
+```
 
 cd ~/D2PC
 python3 generater.py 24
 
-# Run a test
+# Run a test: Update nshard, clients, replicas in run_test.sh and shard0.config, shard.coor.config 
 cd ~/D2PC/store/tools
 bash run_test.sh
 

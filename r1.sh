@@ -17,7 +17,7 @@ total_shards=$((nServers * nshardsPerShards))
 
 # leader:0, f1:1, f2:2
 kk=1
-for ((i = 0; i <= $nshardsPerShards; i++)); do
+for ((i = 0; i < $nshardsPerShards; i++)); do
 
 shardIdx=$((serverIdx * nshardsPerShards + i))
 $ROOT/D2PC/store/strongstore/server \
@@ -25,7 +25,7 @@ $ROOT/D2PC/store/strongstore/server \
     -n $shardIdx -N $total_shards -f $ROOT/D2PC/store/tools/keys \
     -k $keys -e 0 -s 0 -w 0 \
     -c $ROOT/D2PC/store/tools/shard${shardIdx}.config \
-    -i $kk > ./logs/server-replica$shardIdx-$i.log 2>&1 & 
+    -i $kk > ./logs/server-replica-1-$shardIdx-$i.log 2>&1 & 
 
 done
 
