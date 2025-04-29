@@ -428,9 +428,10 @@ main(int argc, char **argv)
         int s = myShard * ware_per_shard;
         for (int i = 1; i <= ware_per_shard; i++){
         if (keyPath) {
-            std::string key_path = keyPath + std::to_string(s + i);
-            Debug("Key path: %s", key_path.c_str());
+            std::string key_path = "/home/weihai/D2PC/tpcc_data" + std::to_string(i);
+            //("Key path: %s", key_path.c_str());
             // keyPath = keyPath + std::to_string(myShard);
+            fprintf(stderr, "read keys from: %s\n", keyPath);
             Debug("myShard: %d", myShard);
             std::ifstream in;
             in.open(key_path);
@@ -441,13 +442,15 @@ main(int argc, char **argv)
             }
 
             std::string key, value;
-
+            int xx = 0;
             while(true){
                 if (!std::getline(in, key)) break;
                 if (!std::getline(in, value)) break;
-
+                xx += 1;
                 server.Load(key, value, Timestamp());
             }
+            fprintf(stderr, "read keys from-2: %d\n", xx);
+
 
             in.close();
             Debug("load finished.");

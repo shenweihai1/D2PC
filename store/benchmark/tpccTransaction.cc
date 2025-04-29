@@ -26,6 +26,7 @@ NewOrder::NewOrder(Client *c)
 
 void NewOrder::GenInputData(uint64_t  ware_id, bool local)
 {
+    local = true;
     w_id_ = ware_id;
     d_id_ = UtilFunc::Rand(1, g_dist_per_ware);
 	c_id_ = UtilFunc::Rand(1, g_cust_per_dist);
@@ -89,6 +90,7 @@ void NewOrder::GenInputData(uint64_t  ware_id, bool local)
 
 void NewOrder::GenInputData(bool local)
 {
+    local = true;
     w_id_ = UtilFunc::Rand(1, g_ware_num);
     Debug("ware num: %lu, generate wid: %lu", g_ware_num, w_id_);
     d_id_ = UtilFunc::Rand(1, g_dist_per_ware);
@@ -534,6 +536,7 @@ Payment::Payment(Client *c)
 
 void Payment::GenInputData(uint64_t  ware_id, bool local)
 {
+    local = true;
     w_id_ = ware_id;
     d_id_ = UtilFunc::Rand(1, g_dist_per_ware);
     
@@ -544,6 +547,7 @@ void Payment::GenInputData(uint64_t  ware_id, bool local)
 
     // is_local_txn_   = local;
     // local_shard_id_ = w_id_; 
+    local = true;
 
     if(local){
         c_w_id_ = w_id_;
@@ -570,6 +574,7 @@ void Payment::GenInputData(uint64_t  ware_id, bool local)
 
 void Payment::GenInputData(bool local)
 {
+    local = true;
     w_id_ = UtilFunc::Rand(1, g_ware_num);
     Debug("ware num: %lu, generate wid: %lu", g_ware_num, w_id_);
     d_id_ = UtilFunc::Rand(1, g_dist_per_ware);
@@ -864,6 +869,7 @@ Delivery::Delivery(Client *c)
 
 void Delivery::GenInputData(bool local)
 {
+    local = true;
     w_id_ = UtilFunc::Rand(1, g_ware_num);
     Debug("ware num: %lu, generate wid: %lu", g_ware_num, w_id_);
     o_carrier_id_ = UtilFunc::Rand(1, g_dist_per_ware);
@@ -876,6 +882,7 @@ void Delivery::GenInputData(bool local)
 
 void Delivery::GenInputData(uint64_t  ware_id, bool local)
 {
+    local = true;
     w_id_ = ware_id;
     o_carrier_id_ = UtilFunc::Rand(1, g_dist_per_ware);
     ol_delivery_d_ = 2024;

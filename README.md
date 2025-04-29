@@ -135,3 +135,10 @@ bash cmds-1.sh
 # 2. # of clients: clients in clients.sh
 # 3. config_prefix in ./store/strongstore/server.cc
 ```
+
+## Run TPC-C
+```
+# Modify: key_path in ./store/strongstore/server.cc
+#  1. generate tpcc_data from tpcc_data1 to tpcc_data10, via "./store/benchmark/tpccData"
+#  2. -w in r0.sh - r2.sh from 0 to 1
+```

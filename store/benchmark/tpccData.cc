@@ -30,6 +30,7 @@ void TPCCData::Generate(){
         std::ofstream outFile(kpath);
 
         Debug("key path:%s", kpath.c_str());
+        std::cout<<"key path:"<<kpath<<std::endl;
 
         if (outFile.is_open()) {
             for (uint64_t item_id = 1; item_id <= g_item_num; item_id++)
@@ -264,7 +265,7 @@ std::string TPCCData::GenerateStock()
 
 int main()
 {
-    TPCCData tpccData(21,g_ware_num);
+    TPCCData tpccData(0,g_ware_num);
 
     tpccData.Generate();
 

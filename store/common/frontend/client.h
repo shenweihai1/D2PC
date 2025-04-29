@@ -13,6 +13,7 @@
 #include "lib/message.h"
 #include "store/benchmark/config.h"
 
+#include <iostream>
 #include <string>
 #include <vector>
 #include <nlohmann/json.hpp>
@@ -50,11 +51,9 @@ public:
     // Sharding logic: Given key, generates a number b/w 0 to nshards-1
     // We only support client.h
     uint64_t key_to_shard(const std::string &key, uint64_t nshards) {
-        int keyn = std::atoi(key.c_str());
-        return keyn % nshards;
-        /*
         Debug("key %s", key.c_str());
         uint64_t i;
+        std::cout<<"nshards:"<<nshards<<std::endl;
         if(nshards == 0){
             // int i;
             std::string table;
@@ -146,15 +145,17 @@ public:
             //         Warning("Unexpected table");
             // }
         } else {
-            uint64_t hash = 5381;
-            const char* str = key.c_str();
-            for (unsigned int i = 0; i < key.length(); i++) {
-                hash = ((hash << 5) + hash) + (uint64_t)str[i];
-            }
-            i = hash % nshards;
+            int keyn = std::atoi(key.c_str());
+            return keyn % nshards;
+            //uint64_t hash = 5381;
+            //const char* str = key.c_str();
+            //for (unsigned int i = 0; i < key.length(); i++) {
+            //    hash = ((hash << 5) + hash) + (uint64_t)str[i];
+            //}
+            //i = hash % nshards;
         }
 
-        return i;*/
+        return i;
     };
 };
 
