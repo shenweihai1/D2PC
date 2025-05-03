@@ -428,7 +428,7 @@ main(int argc, char **argv)
         int s = myShard * ware_per_shard;
         for (int i = 1; i <= ware_per_shard; i++){
         if (keyPath) {
-            std::string key_path = "/home/weihai/D2PC/tpcc_data" + std::to_string(i);
+            std::string key_path = strongstore::getHomePath() + "/D2PC/tpcc_data" + std::to_string(i);
             //("Key path: %s", key_path.c_str());
             // keyPath = keyPath + std::to_string(myShard);
             fprintf(stderr, "read keys from: %s\n", keyPath);

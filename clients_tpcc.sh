@@ -3,7 +3,7 @@ nServers=$2
 serverIdx=$3 # [0-9] 10 machines in total, close replicaId
 nshardsPerShards=$4
 keys=$5
-let clients=$nshardsPerShards*5
+let clients=$nshardsPerShards*4
 echo "using keys: $keys, clients: $clients"
 
 ROOT=$HOME

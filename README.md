@@ -96,8 +96,6 @@ sudo make -j$(nproc) install
 cd D2PC
 make clean
 make -j$(nproc) 
-
-# To deployment on all servers, please check Warbler (OSDI'25).
 ```
 
 ## Run the code
@@ -114,12 +112,15 @@ python3 generator.py {n_partitions} 24
 # Each line represents a host on each DC
 # Example
 ```
+
+```
 f 1
 replica 128.24.19.96:61102
 replica 172.172.97.107:61103
 replica 172.203.21.33:61104
 ```
 
+```
 cd ~/D2PC
 python3 generater.py 24
 
@@ -127,7 +128,7 @@ python3 generater.py 24
 cd ~/D2PC/store/tools
 bash run_test.sh
 
-# Run full code
+# Run full code on nfs-master (Note: nfs master is supposed to access to all other servers)
 bash cmds-1.sh
 
 # Parameters:
@@ -141,4 +142,6 @@ bash cmds-1.sh
 # Modify: key_path in ./store/strongstore/server.cc
 #  1. generate tpcc_data from tpcc_data1 to tpcc_data10, via "./store/benchmark/tpccData"
 #  2. -w in r0.sh - r2.sh from 0 to 1
+#  3. "clients.sh" in "cmds-*.sh" to "clients_tpcc.sh"
+#  4. "*5" in "client_tpcc.sh" is a finetuned parameter
 ```
