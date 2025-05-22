@@ -1,0 +1,227 @@
+diff --git a/cmds-1.sh b/cmds-1.sh
+index 7ba320d..416f533 100644
+--- a/cmds-1.sh
++++ b/cmds-1.sh
+@@ -24,9 +24,9 @@ ssh 172.16.0.9 "ulimit -n 20000;cd D2PC;bash r2.sh $nServers 0 $nShardsPerShards
+ 
+ sleep 5
+ echo "start clients..."
+-ssh 172.16.0.4     "ulimit -n 20000;cd D2PC;bash clients.sh 0 $nServers 0 $nShardsPerShards $keys" &
+-ssh 172.16.0.6     "ulimit -n 20000;cd D2PC;bash clients.sh 1 $nServers 0 $nShardsPerShards $keys" &
+-ssh 172.16.0.9     "ulimit -n 20000;cd D2PC;bash clients.sh 2 $nServers 0 $nShardsPerShards $keys" &
++ssh 172.16.0.4     "ulimit -n 20000;cd D2PC;bash clients_tpcc.sh 0 $nServers 0 $nShardsPerShards $keys" &
++ssh 172.16.0.6     "ulimit -n 20000;cd D2PC;bash clients_tpcc.sh 1 $nServers 0 $nShardsPerShards $keys" &
++ssh 172.16.0.9     "ulimit -n 20000;cd D2PC;bash clients_tpcc.sh 2 $nServers 0 $nShardsPerShards $keys" &
+ 
+ 
+ sleep 40
+diff --git a/cmds-2.sh b/cmds-2.sh
+index 077473f..b2f1252 100644
+--- a/cmds-2.sh
++++ b/cmds-2.sh
+@@ -33,12 +33,12 @@ ssh 172.16.0.16 "ulimit -n 20000;cd D2PC;bash r2.sh $nServers 1 $nShardsPerShard
+ 
+ sleep 5
+ echo "start clients..."
+-ssh 172.16.0.4     "ulimit -n 20000;cd D2PC;bash clients.sh 0 $nServers 0 $nShardsPerShards $keys" &
+-ssh 172.16.0.6     "ulimit -n 20000;cd D2PC;bash clients.sh 1 $nServers 0 $nShardsPerShards $keys" &
+-ssh 172.16.0.9     "ulimit -n 20000;cd D2PC;bash clients.sh 2 $nServers 0 $nShardsPerShards $keys" &
+-ssh 172.16.0.8     "ulimit -n 20000;cd D2PC;bash clients.sh 3 $nServers 1 $nShardsPerShards $keys" &
+-ssh 172.16.0.18     "ulimit -n 20000;cd D2PC;bash clients.sh 4 $nServers 1 $nShardsPerShards $keys" &
+-ssh 172.16.0.16     "ulimit -n 20000;cd D2PC;bash clients.sh 5 $nServers 1 $nShardsPerShards $keys" &
++ssh 172.16.0.4     "ulimit -n 20000;cd D2PC;bash clients_tpcc.sh 0 $nServers 0 $nShardsPerShards $keys" &
++ssh 172.16.0.6     "ulimit -n 20000;cd D2PC;bash clients_tpcc.sh 1 $nServers 0 $nShardsPerShards $keys" &
++ssh 172.16.0.9     "ulimit -n 20000;cd D2PC;bash clients_tpcc.sh 2 $nServers 0 $nShardsPerShards $keys" &
++ssh 172.16.0.8     "ulimit -n 20000;cd D2PC;bash clients_tpcc.sh 3 $nServers 1 $nShardsPerShards $keys" &
++ssh 172.16.0.18     "ulimit -n 20000;cd D2PC;bash clients_tpcc.sh 4 $nServers 1 $nShardsPerShards $keys" &
++ssh 172.16.0.16     "ulimit -n 20000;cd D2PC;bash clients_tpcc.sh 5 $nServers 1 $nShardsPerShards $keys" &
+ 
+ 
+ sleep 40
+@@ -48,4 +48,4 @@ cat ~/D2PC/logs/client-*.log | sort -g -k 3 > ~/D2PC/logs/client.log
+ python ~/D2PC/store/tools/process_logs.py ~/D2PC/logs/client.log 30 
+ 
+ 
+-echo 'DONE'
+\ No newline at end of file
++echo 'DONE'
+diff --git a/cmds-3.sh b/cmds-3.sh
+index c557c69..b5a9e5e 100644
+--- a/cmds-3.sh
++++ b/cmds-3.sh
+@@ -42,15 +42,15 @@ ssh 172.16.0.12 "ulimit -n 20000;cd D2PC;bash r2.sh $nServers 2 $nShardsPerShard
+ 
+ sleep 5
+ echo "start clients..."
+-ssh 172.16.0.4     "ulimit -n 20000;cd D2PC;bash clients.sh 0 $nServers 0 $nShardsPerShards $keys" &
+-ssh 172.16.0.6     "ulimit -n 20000;cd D2PC;bash clients.sh 1 $nServers 0 $nShardsPerShards $keys" &
+-ssh 172.16.0.9     "ulimit -n 20000;cd D2PC;bash clients.sh 2 $nServers 0 $nShardsPerShards $keys" &
+-ssh 172.16.0.8     "ulimit -n 20000;cd D2PC;bash clients.sh 3 $nServers 1 $nShardsPerShards $keys" &
+-ssh 172.16.0.18     "ulimit -n 20000;cd D2PC;bash clients.sh 4 $nServers 1 $nShardsPerShards $keys" &
+-ssh 172.16.0.16     "ulimit -n 20000;cd D2PC;bash clients.sh 5 $nServers 1 $nShardsPerShards $keys" &
+-ssh 172.16.0.14     "ulimit -n 20000;cd D2PC;bash clients.sh 6 $nServers 2 $nShardsPerShards $keys" &
+-ssh 172.16.0.20     "ulimit -n 20000;cd D2PC;bash clients.sh 7 $nServers 2 $nShardsPerShards $keys" &
+-ssh 172.16.0.12     "ulimit -n 20000;cd D2PC;bash clients.sh 8 $nServers 2 $nShardsPerShards $keys" &
++ssh 172.16.0.4     "ulimit -n 20000;cd D2PC;bash clients_tpcc.sh 0 $nServers 0 $nShardsPerShards $keys" &
++ssh 172.16.0.6     "ulimit -n 20000;cd D2PC;bash clients_tpcc.sh 1 $nServers 0 $nShardsPerShards $keys" &
++ssh 172.16.0.9     "ulimit -n 20000;cd D2PC;bash clients_tpcc.sh 2 $nServers 0 $nShardsPerShards $keys" &
++ssh 172.16.0.8     "ulimit -n 20000;cd D2PC;bash clients_tpcc.sh 3 $nServers 1 $nShardsPerShards $keys" &
++ssh 172.16.0.18     "ulimit -n 20000;cd D2PC;bash clients_tpcc.sh 4 $nServers 1 $nShardsPerShards $keys" &
++ssh 172.16.0.16     "ulimit -n 20000;cd D2PC;bash clients_tpcc.sh 5 $nServers 1 $nShardsPerShards $keys" &
++ssh 172.16.0.14     "ulimit -n 20000;cd D2PC;bash clients_tpcc.sh 6 $nServers 2 $nShardsPerShards $keys" &
++ssh 172.16.0.20     "ulimit -n 20000;cd D2PC;bash clients_tpcc.sh 7 $nServers 2 $nShardsPerShards $keys" &
++ssh 172.16.0.12     "ulimit -n 20000;cd D2PC;bash clients_tpcc.sh 8 $nServers 2 $nShardsPerShards $keys" &
+ 
+ 
+ sleep 40
+@@ -60,4 +60,4 @@ cat ~/D2PC/logs/client-*.log | sort -g -k 3 > ~/D2PC/logs/client.log
+ python ~/D2PC/store/tools/process_logs.py ~/D2PC/logs/client.log 30 
+ 
+ 
+-echo 'DONE'
+\ No newline at end of file
++echo 'DONE'
+diff --git a/lib/udptransport.cc b/lib/udptransport.cc
+index 75d7bc7..cb42113 100644
+--- a/lib/udptransport.cc
++++ b/lib/udptransport.cc
+@@ -144,6 +144,7 @@ BindToPort(int fd, const string &host, const string &port)
+ 
+     Debug("Binding to %s:%d", inet_ntoa(sin.sin_addr), htons(sin.sin_port));
+ 
++    usleep(5*1000);
+     if (bind(fd, (sockaddr *)&sin, sizeof(sin)) < 0) {
+             PPanic("Failed to bind to socket host/port %s:%s",
+                   host.c_str(), port.c_str());
+diff --git a/r0.sh b/r0.sh
+index 4089d3c..9364f47 100755
+--- a/r0.sh
++++ b/r0.sh
+@@ -23,7 +23,7 @@ shardIdx=$((serverIdx * nshardsPerShards + i))
+ $ROOT/D2PC/store/strongstore/server \
+     -m "$mode" -t "$tpcmode" -S $total_shards \
+     -n $shardIdx -N $total_shards -f $ROOT/D2PC/store/tools/keys \
+-    -k $keys -e 0 -s 0 -w 0 \
++    -k $keys -e 0 -s 0 -w 1 \
+     -c $ROOT/D2PC/store/tools/shard${shardIdx}.config \
+     -i $kk > ./logs/server-replica-0-$shardIdx-$i.log 2>&1 & 
+ 
+diff --git a/r1.sh b/r1.sh
+index 3496e23..6cdcbe1 100755
+--- a/r1.sh
++++ b/r1.sh
+@@ -23,7 +23,7 @@ shardIdx=$((serverIdx * nshardsPerShards + i))
+ $ROOT/D2PC/store/strongstore/server \
+     -m "$mode" -t "$tpcmode" -S $total_shards \
+     -n $shardIdx -N $total_shards -f $ROOT/D2PC/store/tools/keys \
+-    -k $keys -e 0 -s 0 -w 0 \
++    -k $keys -e 0 -s 0 -w 1 \
+     -c $ROOT/D2PC/store/tools/shard${shardIdx}.config \
+     -i $kk > ./logs/server-replica-1-$shardIdx-$i.log 2>&1 & 
+ 
+diff --git a/r2.sh b/r2.sh
+index 65087a4..8c8f30f 100755
+--- a/r2.sh
++++ b/r2.sh
+@@ -23,7 +23,7 @@ shardIdx=$((serverIdx * nshardsPerShards + i))
+ $ROOT/D2PC/store/strongstore/server \
+     -m "$mode" -t "$tpcmode" -S $total_shards \
+     -n $shardIdx -N $total_shards -f $ROOT/D2PC/store/tools/keys \
+-    -k $keys -e 0 -s 0 -w 0 \
++    -k $keys -e 0 -s 0 -w 1 \
+     -c $ROOT/D2PC/store/tools/shard${shardIdx}.config \
+     -i $kk > ./logs/server-replica-2-$shardIdx-$i.log 2>&1 & 
+ 
+diff --git a/replication/commit/coordinator.cc b/replication/commit/coordinator.cc
+index 091cbda..74f046e 100644
+--- a/replication/commit/coordinator.cc
++++ b/replication/commit/coordinator.cc
+@@ -391,7 +391,7 @@ CoordinatorReplica::HandleReplyDecision(const TransportAddress &remote,
+ bool 
+ CoordinatorReplica::ReachConsensus(PendingCommit *req){
+     Debug("Check if reach consensus");
+-    Debug("participants: %lu", req->participants.size());
++    //Notice("participants: %lu", req->participants.size());
+     Debug("votes: %lu", req->votes.size());
+     if(req->votes.size() != req->participants.size())
+         return false;
+@@ -688,4 +688,4 @@ CoordinatorReplica::HandleVote(const TransportAddress &remote,
+ 
+ 
+ }
+-}
+\ No newline at end of file
++}
+diff --git a/store/benchmark/config.h b/store/benchmark/config.h
+index 02b5d05..d45aa5a 100644
+--- a/store/benchmark/config.h
++++ b/store/benchmark/config.h
+@@ -4,8 +4,8 @@
+ using namespace std;
+ 
+ const std::string key_path = "tpcc_data";
+-const uint64_t g_ware_num = 10;
+-const uint64_t ware_per_shard = 10;
++const uint64_t g_ware_num = 24;
++const uint64_t ware_per_shard = 1;
+ const uint64_t g_dist_per_ware = 10;
+ const uint64_t g_item_num = 100000;
+-const uint64_t g_cust_per_dist = 3000;
+\ No newline at end of file
++const uint64_t g_cust_per_dist = 3000;
+diff --git a/store/benchmark/tpccData.cc b/store/benchmark/tpccData.cc
+index c9f9072..d9cb742 100644
+--- a/store/benchmark/tpccData.cc
++++ b/store/benchmark/tpccData.cc
+@@ -265,9 +265,9 @@ std::string TPCCData::GenerateStock()
+ 
+ int main()
+ {
+-    TPCCData tpccData(0,g_ware_num);
++    TPCCData tpccData(11,g_ware_num+1);
+ 
+     tpccData.Generate();
+ 
+     return 0;
+-}
+\ No newline at end of file
++}
+diff --git a/store/common/frontend/client.h b/store/common/frontend/client.h
+index 75472d1..5a23205 100644
+--- a/store/common/frontend/client.h
++++ b/store/common/frontend/client.h
+@@ -103,7 +103,8 @@ public:
+                 Warning("Unexpected table");
+             }
+ 
+-            i = (i - 1) / ware_per_shard;
++            i = (i - 1) / 1;
++	    //Notice("s:%d", i);
+ 
+             // i--;
+ 
+diff --git a/store/strongstore/server.cc b/store/strongstore/server.cc
+index f0f4b71..b518833 100644
+--- a/store/strongstore/server.cc
++++ b/store/strongstore/server.cc
+@@ -393,7 +393,7 @@ main(int argc, char **argv)
+     Debug("index: %lu", index);
+     Debug("config num: %d", config.n);
+     Debug("coor num: %d", coordinatorConfig.n);
+-    Debug("Number of shards: %d, myShard: %d", maxShard, myShard);
++    Notice("Number of shards: %d, myShard: %d", maxShard, myShard);
+ 
+     // Debug("workload: %d", workloadData);
+     if(workloadData == 0){
+@@ -426,9 +426,9 @@ main(int argc, char **argv)
+     } 
+     else if (workloadData == 1){
+         int s = myShard * ware_per_shard;
+-        for (int i = 1; i <= ware_per_shard; i++){
++        for (int i = 1; i <= 1; i++){
+         if (keyPath) {
+-            std::string key_path = strongstore::getHomePath() + "/D2PC/tpcc_data" + std::to_string(i);
++            std::string key_path = strongstore::getHomePath() + "/D2PC/tpcc_data" + std::to_string(s+1);
+             //("Key path: %s", key_path.c_str());
+             // keyPath = keyPath + std::to_string(myShard);
+             fprintf(stderr, "read keys from: %s\n", keyPath);
